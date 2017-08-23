@@ -23,28 +23,25 @@ trait returnsApiResponses
         return new ApiResponse(($this->model)::create($request->all()));
     }
 
-    public function show($id)
+    public function show($model)
     {
-        return new ApiResponse(new $this->model($id));
+        return new ApiResponse($model);
     }
 
-    public function update(Request $request, $id)
+    public function update(Request $request, $model)
     {
-
         if (method_exists($this, 'validateApiRequest')) {
             app()->call([$this, 'validateApiRequest']);
         }
 
-        $model = ($this->model)::find($id);
         $model->fill($request->all());
         $model->save();
 
         return new ApiResponse($model);
     }
 
-    public function destroy($id)
+    public function destroy($model)
     {
-        $model = ($this->model)::find($id);
         $model->delete();
 
         return new ApiResponse($model);
