@@ -1,0 +1,20 @@
+{
+    "name": "imarc/clockvine",
+    "description": "laravel api for working with clockvine-vue",
+    "type": "library",
+    "license": "Apache",
+    "authors": [
+        {
+            "name": "Kevin Hamer",
+            "email": "kevin@imarc.com"
+        }
+    ],
+    "autoload": {
+        "psr-4": {
+            "Imarc\\clockvine\\": "src/"
+        }
+    },
+    "require": {
+        "laravel/framework": "^5.4"
+    }
+}
