@@ -57,6 +57,10 @@ class ApiResponse extends Response
             ));
         }
 
+        if (isset($content['errors']) && count($content['errors'])) {
+            unset($content['data']);
+        }
+
         if (is_array($content) || $content instanceof JsonSerizable) {
             return json_encode($content);
         } else {
