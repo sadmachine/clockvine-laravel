@@ -13,7 +13,7 @@ class ApiResponse extends Response
      * @param  mixed  $value
      * @return bool
      */
-    static private function isSerializeable($value)
+    static public function isSerializeable($value)
     {
         if (is_array($value)) {
             foreach ($value as $item) {

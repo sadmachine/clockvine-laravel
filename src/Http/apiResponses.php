@@ -21,7 +21,7 @@ class apiResponses
 
         $original = $response->getOriginalContent();
 
-        if ($original instanceof Response || is_string($original)) {
+        if ($response instanceof ApiResponse || is_string($original)) {
             return $response;
         }
 
@@ -31,8 +31,12 @@ class apiResponses
             $response->headers->all()
         );
 
-        if ($response->getStatusCode() > 399) {
-            $new_response->addError($original);
+        if ($response->getStatusCode() > 299) {
+            if (ApiResponse::isSerializeable($original)) {
+                $new_response->addError($original);
+            } else {
+                return $response;
+            }
         } else {
             $new_response->setContent($original);
         }
