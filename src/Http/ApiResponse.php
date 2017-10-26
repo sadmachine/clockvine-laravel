@@ -2,8 +2,9 @@
 
 namespace Imarc\clockvine\Http;
 
-use JsonSerializable;
+use Illuminate\Contracts\Pagination\Paginator;
 use Illuminate\Http\Response;
+use JsonSerializable;
 
 class ApiResponse extends Response
 {
@@ -90,7 +91,12 @@ class ApiResponse extends Response
      */
     public function setContent($content)
     {
-        $this->content = ['data' => $content];
+        if ($content instanceof Paginator) {
+            $this->content = $content->toArray();
+
+        } else {
+            $this->content = ['data' => $content];
+        }
 
         return $this;
     }
