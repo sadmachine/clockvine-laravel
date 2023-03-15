@@ -8,6 +8,8 @@ use JsonSerializable;
 
 class ApiResponse extends Response
 {
+    public $headers;
+
     /**
      * Checks whether a given value is serializable.
      *
@@ -26,13 +28,13 @@ class ApiResponse extends Response
 
         } else {
             return null === $value || is_bool($value) || is_string($value) || is_numeric($value)
-                || is_callable([$value, '__toString']) || $value instanceof JsonSerizable;
+                || is_callable([$value, '__toString']) || $value instanceof JsonSerializable;
         }
     }
 
     /**
      */
-    public function __construct($content = '', $status = 200, $headers = array())
+    public function __construct($content = '', $status = 200, $headers = [])
     {
         parent::__construct($content, $status, $headers);
 
@@ -48,7 +50,7 @@ class ApiResponse extends Response
      *
      * @throws \UnexpectedValueException
      */
-    public function getContent()
+    public function getContent(): string|false
     {
         $content = $this->content;
         if (!static::isSerializeable($content)) {
@@ -74,7 +76,7 @@ class ApiResponse extends Response
      *
      * @return $this
      */
-    public function sendContent()
+    public function sendContent() : static
     {
         echo $this->getContent();
 
@@ -89,7 +91,7 @@ class ApiResponse extends Response
      *
      * @return $this
      */
-    public function setContent($content)
+    public function setContent(mixed $content): static
     {
         if ($content instanceof Paginator) {
             $this->content = $content->toArray();
