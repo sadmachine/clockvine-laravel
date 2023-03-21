@@ -26,7 +26,7 @@ class ApiResponse extends Response
 
         } else {
             return null === $value || is_bool($value) || is_string($value) || is_numeric($value)
-                || is_callable([$value, '__toString']) || $value instanceof JsonSerizable;
+                || is_callable([$value, '__toString']) || $value instanceof JsonSerializable;;
         }
     }
 
